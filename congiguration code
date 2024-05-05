@@ -1,0 +1,50 @@
+# HotelManagement-networkingdesign
+As a part of your end year networking project,you are required to design and  implement Vic Modern Hotel Network
+Router Configuration (for each router):
+hostname Router1
+!
+interface Serial0/0
+ ip address 10.10.0.1 255.255.255.252
+!
+interface Serial0/1
+ ip address 10.10.10.5 255.255.255.252
+!
+router ospf 1
+ network 10.0.0.0 0.255.255.255 area 0
+!
+line vty 0 4
+ login local
+ transport input ssh
+Switch Configuration (for each floor switch)
+hostname FloorSwitch1
+!
+interface range FastEthernet0/1-24
+ switchport mode access
+ switchport access vlan 80
+!
+interface Vlan80
+ ip address 192.168.8.254 255.255.255.0
+!
+ip dhcp excluded-address 192.168.8.1 192.168.8.10
+ip dhcp pool VLAN80_POOL
+ network 192.168.8.0 255.255.255.0
+ default-router 192.168.8.254
+!
+Wireless Access Point Configuration (for each floor):
+hostname WAP1
+!
+interface Vlan80
+ ip address 192.168.8.253 255.255.255.0
+!
+ip dhcp excluded-address 192.168.8.1 192.168.8.10
+ip dhcp pool WIFI_VLAN80_POOL
+ network 192.168.8.0 255.255.255.0
+ default-router 192.168.8.254
+!
+Printer Configuration (for each department):
+hostname Printer_Reception
+!
+interface Vlan80
+ ip address 192.168.8.2 255.255.255.0
+!
+
